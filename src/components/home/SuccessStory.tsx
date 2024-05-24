@@ -4,7 +4,7 @@ const SuccessStory = () => {
   return (
     <div className="mt-12">
       <h1 className="text-4xl font-bold mb-3">Success Stories</h1>
-      <div className="bg-[url('/images/success1.jpg')] bg-no-repeat bg-cover bg-center h-[55vh] flex justify-center items-center p-4 rounded-md">
+      <div className="bg-[url('/images/success1.jpg')] bg-no-repeat bg-cover bg-center h-full flex justify-center items-center p-4 rounded-md">
         <div>
           <div className="grid sm:grid-cols-2 grid-cols-1 gap-8">
             <p className="text-justify text-white backdrop-blur-sm rounded-lg p-4 pl-0">
