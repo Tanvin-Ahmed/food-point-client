@@ -1,5 +1,13 @@
+import SuccessStory from "../components/home/SuccessStory";
+import Banner from "../components/home/Banner";
+
 const Home = () => {
-  return <div>Home</div>;
+  return (
+    <section>
+      <Banner />
+      <SuccessStory />
+    </section>
+  );
 };
 
 export default Home;

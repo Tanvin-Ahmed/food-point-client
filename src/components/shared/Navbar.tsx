@@ -23,7 +23,7 @@ const Navbar = () => {
   };
 
   return (
-    <nav className="border-b bg-white border-gray-200 shadow-sm fixed top-0 left-0 right-0 w-full z-10">
+    <nav className="border-b bg-white border-gray-200 shadow-sm fixed top-0 left-0 right-0 w-full z-50">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16">
           <div className="flex items-center">
@@ -41,7 +41,7 @@ const Navbar = () => {
             </div>
           </div>
           <div className="hidden md:flex md:items-center md:space-x-4">
-            <Link to="#" className="text-gray-800 hover:text-orange-500">
+            <Link to="/" className="text-gray-800 hover:text-orange-500">
               Home
             </Link>
             <Link to="#" className="text-gray-800 hover:text-orange-500">
@@ -151,7 +151,7 @@ const Navbar = () => {
           )}
 
           <Link
-            to="#"
+            to="/"
             className="block my-3 text-gray-800 hover:text-orange-600"
           >
             Home

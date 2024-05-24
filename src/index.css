@@ -1,3 +1,7 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+.button {
+  @apply rounded-lg shadow-lg py-2 px-3 border-none outline-none font-semibold transition-all flex justify-center items-center gap-2;
+}
