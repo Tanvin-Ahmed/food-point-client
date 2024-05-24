@@ -13,3 +13,16 @@ export const isLoggedInUser = (): boolean => {
 export const setAuthInfo = (info: UserType) => {
   localStorage.setItem("auth", JSON.stringify(info));
 };
+
+export const userInfoFromLocal = () => {
+  const str = localStorage.getItem("auth");
+
+  if (str) {
+    return JSON.parse(str) as UserType;
+  }
+  return null;
+};
+
+export const removeAuthInfo = () => {
+  localStorage.removeItem("auth");
+};

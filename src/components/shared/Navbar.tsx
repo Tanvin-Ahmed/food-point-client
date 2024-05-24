@@ -1,19 +1,29 @@
 // Navbar.jsx
 
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { Link } from "react-router-dom";
 import OptimizedImage from "./OptimizedImage";
 import { signInWithGoogle } from "../../firebase/auth/google";
+import { appContext } from "../../context/createContext";
+import { removeAuthInfo } from "../../utils/userDetails";
+import { MdLogout } from "react-icons/md";
+import { LiaCoinsSolid } from "react-icons/lia";
 
 const Navbar = () => {
+  const { userInfo, setUserInfo } = useContext(appContext);
   const [isOpen, setIsOpen] = useState(false);
+
+  const handleLogout = () => {
+    setUserInfo(null);
+    removeAuthInfo();
+  };
 
   const toggleMenu = () => {
     setIsOpen(!isOpen);
   };
 
   return (
-    <nav className="border-b bg-white border-gray-200 shadow-sm fixed w-full z-10">
+    <nav className="border-b bg-white border-gray-200 shadow-sm fixed top-0 left-0 right-0 w-full z-10">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16">
           <div className="flex items-center">
@@ -35,26 +45,50 @@ const Navbar = () => {
               Home
             </Link>
             <Link to="#" className="text-gray-800 hover:text-orange-500">
-              recipes
+              Recipes
             </Link>
-            <button
-              type="button"
-              onClick={signInWithGoogle}
-              className="text-gray-800 border-none shadow-inner-lg py-1 pr-3 rounded-3xl hover:text-white hover:bg-orange-500 hover:transition-all flex justify-center gap-x-2 items-center"
-            >
-              <OptimizedImage
-                height={30}
-                width={30}
-                src="/images/google-icon.svg"
-                alt="google icon"
-              />
-              <p>Login with Google</p>
-            </button>
-            <img
-              className="h-8 w-8 rounded-full"
-              src="/path-to-avatar.jpg"
-              alt="User Avatar"
-            />
+
+            {userInfo?.email ? (
+              <>
+                <Link to="#" className="text-gray-800 hover:text-orange-500">
+                  Add recipes
+                </Link>
+                <div className="text-gray-800 flex justify-center items-center hover:text-orange-500">
+                  <LiaCoinsSolid
+                    size={22}
+                    className="text-orange-500 :hover:text-white"
+                  />{" "}
+                  {userInfo?.coins} Coins
+                </div>
+                <img
+                  className="h-8 w-8 rounded-full"
+                  src={userInfo?.photoURL}
+                  alt="User Avatar"
+                />
+                <button
+                  type="button"
+                  onClick={handleLogout}
+                  className="text-gray-800 border-none shadow-inner-lg py-1 px-3 rounded-3xl hover:text-white hover:bg-orange-500 hover:transition-all flex justify-center gap-x-2 items-center"
+                >
+                  <MdLogout />
+                  Logout
+                </button>
+              </>
+            ) : (
+              <button
+                type="button"
+                onClick={signInWithGoogle}
+                className="text-gray-800 border-none shadow-inner-lg py-1 pr-3 rounded-3xl hover:text-white hover:bg-orange-500 hover:transition-all flex justify-center gap-x-2 items-center"
+              >
+                <OptimizedImage
+                  height={30}
+                  width={30}
+                  src="/images/google-icon.svg"
+                  alt="google icon"
+                />
+                <p>Login with Google</p>
+              </button>
+            )}
           </div>
           <div className="-mr-2 flex md:hidden">
             <button
@@ -106,25 +140,70 @@ const Navbar = () => {
         }`}
       >
         <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3">
-          <Link to="#" className="block text-gray-800 hover:text-gray-600">
+          {userInfo?.email && (
+            <div className="mb-4">
+              <OptimizedImage
+                className="h-8 w-8 rounded-full"
+                src={userInfo.photoURL}
+                alt="User Avatar"
+              />
+            </div>
+          )}
+
+          <Link
+            to="#"
+            className="block my-3 text-gray-800 hover:text-orange-600"
+          >
             Home
           </Link>
-          <Link to="#" className="block text-gray-800 hover:text-gray-600">
-            About
+          <Link
+            to="#"
+            className="block my-3 text-gray-800 hover:text-orange-600"
+          >
+            Recipe
           </Link>
-          <Link to="#" className="block text-gray-800 hover:text-gray-600">
-            Services
-          </Link>
-          <Link to="#" className="block text-gray-800 hover:text-gray-600">
-            Contact
-          </Link>
-          <div className="mt-4">
-            <OptimizedImage
-              className="h-8 w-8 rounded-full"
-              src="/images/logo.png"
-              alt="User Avatar"
-            />
-          </div>
+
+          {userInfo?.email ? (
+            <>
+              <Link
+                to="#"
+                className="block my-3 text-gray-800 hover:text-orange-600"
+              >
+                Add Recipe
+              </Link>
+              <div className="inline-block my-3 text-gray-800 hover:text-orange-600">
+                <div className="flex justify-center items-center">
+                  <LiaCoinsSolid
+                    size={22}
+                    className="text-orange-500 :hover:text-white"
+                  />{" "}
+                  {userInfo?.coins} Coins
+                </div>
+              </div>
+              <button
+                type="button"
+                onClick={handleLogout}
+                className="text-gray-800 my-3 border-none shadow-inner-lg py-1 px-3 rounded-3xl hover:text-white hover:bg-orange-500 hover:transition-all flex justify-center gap-x-2 items-center"
+              >
+                <MdLogout />
+                Logout
+              </button>
+            </>
+          ) : (
+            <button
+              type="button"
+              onClick={signInWithGoogle}
+              className="text-gray-800 my-3 border-none shadow-inner-lg py-1 pr-3 rounded-3xl hover:text-white hover:bg-orange-500 hover:transition-all flex justify-center gap-x-2 items-center"
+            >
+              <OptimizedImage
+                height={30}
+                width={30}
+                src="/images/google-icon.svg"
+                alt="google icon"
+              />
+              <p>Login with Google</p>
+            </button>
+          )}
         </div>
       </div>
     </nav>
