@@ -35,7 +35,7 @@ const Navbar = () => {
     <nav className="border-b bg-white border-gray-200 shadow-sm fixed top-0 left-0 right-0 w-full z-50">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16">
-          <div className="flex items-center">
+          <Link to={"/"} className="flex items-center">
             <div className="flex-shrink-0">
               <OptimizedImage
                 className="h-8 w-8"
@@ -48,12 +48,15 @@ const Navbar = () => {
                 <span className="text-orange-400">Food</span> Point
               </span>
             </div>
-          </div>
+          </Link>
           <div className="hidden md:flex md:items-center md:space-x-4">
             <Link to="/" className="text-gray-800 hover:text-orange-500">
               Home
             </Link>
-            <Link to="#" className="text-gray-800 hover:text-orange-500">
+            <Link
+              to="/all-recipes"
+              className="text-gray-800 hover:text-orange-500"
+            >
               Recipes
             </Link>
 
@@ -169,10 +172,10 @@ const Navbar = () => {
             Home
           </Link>
           <Link
-            to="#"
+            to="/all-recipes"
             className="block my-3 text-gray-800 hover:text-orange-600"
           >
-            Recipe
+            Recipes
           </Link>
 
           {userInfo?.email ? (

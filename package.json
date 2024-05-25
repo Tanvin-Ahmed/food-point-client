@@ -19,6 +19,7 @@
     "react-dom": "^18.2.0",
     "react-hot-toast": "^2.4.1",
     "react-icons": "^5.2.1",
+    "react-infinite-scroll-component": "^6.1.0",
     "react-lazy-load-image-component": "^1.6.0",
     "react-quill": "^2.0.0",
     "react-router-dom": "^6.23.1",
@@ -26,6 +27,7 @@
     "tailwind-merge": "^2.3.0"
   },
   "devDependencies": {
+    "@tailwindcss/typography": "^0.5.13",
     "@types/react": "^18.2.66",
     "@types/react-dom": "^18.2.22",
     "@types/react-lazy-load-image-component": "^1.6.4",

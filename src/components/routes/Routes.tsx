@@ -2,6 +2,9 @@ import { RouterProvider, createBrowserRouter } from "react-router-dom";
 import App from "../../App";
 import { ComponentType, FC, Suspense, lazy } from "react";
 import { LuLoader2 } from "react-icons/lu";
+import PrivateRoute from "./PrivateRoute";
+import { AxiosInstance } from "../../libs/axiosInstance";
+import { RecipeType } from "../../types";
 
 const Loadable = (Component: ComponentType) => {
   const LoadableComponent: FC = (props) => (
@@ -22,6 +25,8 @@ const Loadable = (Component: ComponentType) => {
 const Home = Loadable(lazy(() => import("../../pages/Home")));
 const ErrorBoundary = Loadable(lazy(() => import("../../pages/ErrorBoundary")));
 const AddRecipe = Loadable(lazy(() => import("../../pages/AddRecipe")));
+const Recipes = Loadable(lazy(() => import("../../pages/Recipes")));
+const RecipeDetails = Loadable(lazy(() => import("../../pages/RecipeDetails")));
 
 const Routes = () => {
   const routes = createBrowserRouter([
@@ -35,8 +40,35 @@ const Routes = () => {
           element: <Home />,
         },
         {
-          path: "/add-recipe",
-          element: <AddRecipe />,
+          path: "all-recipes",
+          element: <Recipes />,
+        },
+        {
+          path: "add-recipe",
+          element: (
+            <PrivateRoute>
+              <AddRecipe />
+            </PrivateRoute>
+          ),
+        },
+        {
+          path: "recipe-details/:id",
+          element: (
+            <PrivateRoute>
+              <RecipeDetails />
+            </PrivateRoute>
+          ),
+          loader: async ({ params }) => {
+            const { data: details } = await AxiosInstance<RecipeType>(
+              `/recipe/details/${params.id}`
+            );
+
+            const { data: similarRecipes } = await AxiosInstance<RecipeType[]>(
+              `/recipe/recipes-by-category/${details.category}/${details._id}`
+            );
+
+            return { details, similarRecipes };
+          },
         },
       ],
     },
