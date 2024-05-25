@@ -1,6 +1,26 @@
+import { useEffect, useState } from "react";
 import Counter from "./Counter";
+import { AxiosInstance } from "../../libs/axiosInstance";
+import { DocumentCountType } from "../../types";
 
 const SuccessStory = () => {
+  const [totalUser, setTotalUser] = useState(0);
+  const [totalRecipe, setTotalRecipe] = useState(0);
+
+  useEffect(() => {
+    (async () => {
+      const { data: userCount } = await AxiosInstance<DocumentCountType>(
+        "/users/count"
+      );
+      setTotalUser(userCount.count);
+
+      const { data: recipeCount } = await AxiosInstance<DocumentCountType>(
+        "/recipe/get-recipe-count"
+      );
+      setTotalRecipe(recipeCount.count);
+    })();
+  }, []);
+
   return (
     <div className="mt-12">
       <h1 className="text-4xl font-bold mb-3">Success Stories</h1>
@@ -21,8 +41,8 @@ const SuccessStory = () => {
               with fellow food enthusiasts globally.
             </p>
             <div className="flex justify-center items-center flex-wrap gap-4">
-              <Counter label="Total User" count={500} />
-              <Counter label="Total Recipe" count={1500} />
+              <Counter label="Total User" count={totalUser} />
+              <Counter label="Total Recipe" count={totalRecipe} />
             </div>
           </div>
         </div>
