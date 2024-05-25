@@ -7,7 +7,7 @@ import AppContext from "./context/AppContext.tsx";
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
   <React.StrictMode>
-    <Toaster />
+    <Toaster position="bottom-right" reverseOrder={false} />
     <AppContext>
       <Routes />
     </AppContext>

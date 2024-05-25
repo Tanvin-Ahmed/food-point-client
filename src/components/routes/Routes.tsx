@@ -21,6 +21,7 @@ const Loadable = (Component: ComponentType) => {
 
 const Home = Loadable(lazy(() => import("../../pages/Home")));
 const ErrorBoundary = Loadable(lazy(() => import("../../pages/ErrorBoundary")));
+const AddRecipe = Loadable(lazy(() => import("../../pages/AddRecipe")));
 
 const Routes = () => {
   const routes = createBrowserRouter([
@@ -32,6 +33,10 @@ const Routes = () => {
         {
           index: true,
           element: <Home />,
+        },
+        {
+          path: "/add-recipe",
+          element: <AddRecipe />,
         },
       ],
     },

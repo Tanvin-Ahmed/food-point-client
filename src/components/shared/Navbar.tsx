@@ -59,7 +59,10 @@ const Navbar = () => {
 
             {userInfo?.email ? (
               <>
-                <Link to="#" className="text-gray-800 hover:text-orange-500">
+                <Link
+                  to="/add-recipe"
+                  className="text-gray-800 hover:text-orange-500"
+                >
                   Add recipes
                 </Link>
                 <div className="text-gray-800 flex justify-center items-center hover:text-orange-500">
@@ -175,7 +178,7 @@ const Navbar = () => {
           {userInfo?.email ? (
             <>
               <Link
-                to="#"
+                to="/add-recipe"
                 className="block my-3 text-gray-800 hover:text-orange-600"
               >
                 Add Recipe
