@@ -3,10 +3,21 @@ import { useNavigate } from "react-router-dom";
 import { appContext } from "../../context/createContext";
 import { IoAddCircle, IoFastFoodSharp } from "react-icons/io5";
 import { signInWithGoogle } from "../../firebase/auth/google";
+import { userInfoFromLocal } from "../../utils/userDetails";
+import { AxiosInstance } from "../../libs/axiosInstance";
 
 const Banner = () => {
   const navigate = useNavigate();
-  const { userInfo } = useContext(appContext);
+  const { userInfo, setUserInfo } = useContext(appContext);
+
+  const handleSignIn = async () => {
+    await signInWithGoogle();
+    const user = userInfoFromLocal();
+    const { data } = await AxiosInstance.get(`/users/get/${user?.email}`);
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    setUserInfo(data);
+  };
+
   return (
     <div className="relative h-[80vh] w-full overflow-hidden">
       <video
@@ -28,11 +39,11 @@ const Banner = () => {
           See recipes
         </button>
         <button
-          onClick={() => {
+          onClick={async () => {
             if (userInfo?.email) {
               navigate("/add-recipe");
             } else {
-              signInWithGoogle();
+              await handleSignIn();
             }
           }}
           className="button bg-orange-600 text-white hover:text-orange-500 hover:bg-transparent"

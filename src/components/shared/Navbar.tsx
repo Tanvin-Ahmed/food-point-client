@@ -5,9 +5,10 @@ import { Link } from "react-router-dom";
 import OptimizedImage from "./OptimizedImage";
 import { signInWithGoogle } from "../../firebase/auth/google";
 import { appContext } from "../../context/createContext";
-import { removeAuthInfo } from "../../utils/userDetails";
+import { removeAuthInfo, userInfoFromLocal } from "../../utils/userDetails";
 import { MdLogout } from "react-icons/md";
 import { LiaCoinsSolid } from "react-icons/lia";
+import { AxiosInstance } from "../../libs/axiosInstance";
 
 const Navbar = () => {
   const { userInfo, setUserInfo } = useContext(appContext);
@@ -16,6 +17,14 @@ const Navbar = () => {
   const handleLogout = () => {
     setUserInfo(null);
     removeAuthInfo();
+  };
+
+  const handleSignIn = async () => {
+    await signInWithGoogle();
+    const user = userInfoFromLocal();
+    const { data } = await AxiosInstance.get(`/users/get/${user?.email}`);
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    setUserInfo(data);
   };
 
   const toggleMenu = () => {
@@ -77,7 +86,7 @@ const Navbar = () => {
             ) : (
               <button
                 type="button"
-                onClick={signInWithGoogle}
+                onClick={handleSignIn}
                 className="text-gray-800 border-none shadow-inner-lg py-1 pr-3 rounded-3xl hover:text-white hover:bg-orange-500 hover:transition-all flex justify-center gap-x-2 items-center"
               >
                 <OptimizedImage
@@ -192,7 +201,7 @@ const Navbar = () => {
           ) : (
             <button
               type="button"
-              onClick={signInWithGoogle}
+              onClick={handleSignIn}
               className="text-gray-800 my-3 border-none shadow-inner-lg py-1 pr-3 rounded-3xl hover:text-white hover:bg-orange-500 hover:transition-all flex justify-center gap-x-2 items-center"
             >
               <OptimizedImage

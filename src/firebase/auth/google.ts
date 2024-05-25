@@ -10,16 +10,9 @@ const auth = getAuth(app);
 export const signInWithGoogle = async () => {
   try {
     const result = await signInWithPopup(auth, provider);
-    const credential = GoogleAuthProvider.credentialFromResult(result);
-    const token = credential?.accessToken;
+    // const credential = GoogleAuthProvider.credentialFromResult(result);
+    // const token = credential?.accessToken;
     const user = result.user;
-
-    setAuthInfo({
-      token,
-      displayName: user.displayName || "",
-      photoURL: user.photoURL || "",
-      email: user.email || "",
-    });
 
     const { data } = await AxiosInstance.post("/users/create", {
       email: user.email,
@@ -27,6 +20,8 @@ export const signInWithGoogle = async () => {
       photoURL: user.photoURL,
       coins: 50,
     });
+
+    setAuthInfo(data.token);
 
     toast.success(data.message);
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
