@@ -61,6 +61,9 @@ const Navbar = () => {
             >
               Recipes
             </Link>
+            <Link to="/pricing" className="text-gray-800 hover:text-orange-500">
+              Price
+            </Link>
 
             {userInfo?.email ? (
               <>
@@ -178,6 +181,12 @@ const Navbar = () => {
             className="block my-3 text-gray-800 hover:text-orange-600"
           >
             Recipes
+          </Link>
+          <Link
+            to="/pricing"
+            className="block my-3 text-gray-800 hover:text-orange-600"
+          >
+            Price
           </Link>
 
           {userInfo?.email ? (

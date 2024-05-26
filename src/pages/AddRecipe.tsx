@@ -47,7 +47,9 @@ const AddRecipe = () => {
       data.append("image", formData.image);
 
       const res = await fetch(
-        `https://api.imgbb.com/1/upload?key=78bf91a8ea909a63b5735b590d3581ad`,
+        `https://api.imgbb.com/1/upload?key=${
+          import.meta.env.VITE_IMAGEBB_KEY
+        }`,
         {
           method: "POST",
           body: data,

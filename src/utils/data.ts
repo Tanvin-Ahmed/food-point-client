@@ -72,3 +72,24 @@ export const foodCategories = [
   "Turkish",
   "Polish",
 ];
+
+export const pricingData = [
+  {
+    id: 1,
+    amount: 1,
+    coins: 100,
+    details: ["Lifetime validation"],
+  },
+  {
+    id: 2,
+    amount: 5,
+    coins: 500,
+    details: ["Lifetime validation", "24/7 support"],
+  },
+  {
+    id: 3,
+    amount: 10,
+    coins: 1000,
+    details: ["Lifetime validation", "24/7 support"],
+  },
+];

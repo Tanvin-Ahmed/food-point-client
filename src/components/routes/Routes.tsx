@@ -27,6 +27,8 @@ const ErrorBoundary = Loadable(lazy(() => import("../../pages/ErrorBoundary")));
 const AddRecipe = Loadable(lazy(() => import("../../pages/AddRecipe")));
 const Recipes = Loadable(lazy(() => import("../../pages/Recipes")));
 const RecipeDetails = Loadable(lazy(() => import("../../pages/RecipeDetails")));
+const Pricing = Loadable(lazy(() => import("../../pages/Pricing")));
+const Payment = Loadable(lazy(() => import("../../pages/Payment")));
 
 const Routes = () => {
   const routes = createBrowserRouter([
@@ -42,6 +44,18 @@ const Routes = () => {
         {
           path: "all-recipes",
           element: <Recipes />,
+        },
+        {
+          path: "pricing",
+          element: <Pricing />,
+        },
+        {
+          path: "payment/:id",
+          element: (
+            <PrivateRoute>
+              <Payment />
+            </PrivateRoute>
+          ),
         },
         {
           path: "add-recipe",
