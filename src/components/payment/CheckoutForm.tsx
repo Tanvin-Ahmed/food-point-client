@@ -114,7 +114,7 @@ const CheckoutForm = ({ amount, coin }: Props) => {
       />
       <button
         type="submit"
-        className="button mt-6 w-full bg-orange-100 transition-all hover:bg-orange-400 hover:text-white"
+        className="button mt-6 w-full disabled:hover:bg-orange-100 bg-orange-100 transition-all hover:bg-orange-400 hover:text-white"
         disabled={!stripe || !clientSecret.trim() || isLoading}
       >
         Pay {amount} $

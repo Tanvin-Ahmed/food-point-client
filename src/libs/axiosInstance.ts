@@ -3,8 +3,8 @@ import { getTokenFromLocal, tokenPatternCheck } from "../utils/userDetails";
 
 const token = getTokenFromLocal();
 
-axios.defaults.baseURL = "http://localhost:5000";
-// axios.defaults.baseURL = "https://food-point-server.vercel.app";
+// axios.defaults.baseURL = "http://localhost:5000";
+axios.defaults.baseURL = "https://food-point-server.vercel.app";
 
 axios.interceptors.request.use(
   (config) => {
