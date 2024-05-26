@@ -4,12 +4,15 @@ import "./index.css";
 import Routes from "./components/routes/Routes.tsx";
 import { Toaster } from "react-hot-toast";
 import AppContext from "./context/AppContext.tsx";
+import { ConfirmProvider } from "material-ui-confirm";
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
   <React.StrictMode>
     <Toaster position="bottom-right" reverseOrder={false} />
-    <AppContext>
-      <Routes />
-    </AppContext>
+    <ConfirmProvider>
+      <AppContext>
+        <Routes />
+      </AppContext>
+    </ConfirmProvider>
   </React.StrictMode>
 );

@@ -9,6 +9,7 @@ import { removeAuthInfo, userInfoFromLocal } from "../../utils/userDetails";
 import { MdLogout } from "react-icons/md";
 import { LiaCoinsSolid } from "react-icons/lia";
 import { AxiosInstance } from "../../libs/axiosInstance";
+import { UserType } from "../../types";
 
 const Navbar = () => {
   const { userInfo, setUserInfo } = useContext(appContext);
@@ -22,8 +23,9 @@ const Navbar = () => {
   const handleSignIn = async () => {
     await signInWithGoogle();
     const user = userInfoFromLocal();
-    const { data } = await AxiosInstance.get(`/users/get/${user?.email}`);
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    const { data } = await AxiosInstance.get<UserType>(
+      `/users/get/${user?.email}`
+    );
     setUserInfo(data);
   };
 
