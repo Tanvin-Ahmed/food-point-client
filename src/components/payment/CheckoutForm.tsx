@@ -55,8 +55,7 @@ const CheckoutForm = ({ amount, coin }: Props) => {
     }
 
     setIsLoading(true);
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    const { error, paymentMethod } = await stripe.createPaymentMethod({
+    const { error } = await stripe.createPaymentMethod({
       type: "card",
       card,
     });

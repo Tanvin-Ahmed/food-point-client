@@ -12,6 +12,7 @@ import { AxiosInstance } from "../libs/axiosInstance";
 import InfiniteScroll from "react-infinite-scroll-component";
 import { LuLoader2 } from "react-icons/lu";
 import RecipeCard from "../components/recipe/RecipeCard";
+import toast from "react-hot-toast";
 
 const Recipes = () => {
   const [country, setCountry] = useState("");
@@ -20,7 +21,7 @@ const Recipes = () => {
   const [page, setPage] = useState(1);
   const [resultCount, setResultCount] = useState(0);
   const [recipeList, setRecipeList] = useState<RecipeListType[] | []>([]);
-
+  const [ninitialLoading, setInitialLoading] = useState(false);
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [_, startTransition] = useTransition();
 
@@ -34,15 +35,24 @@ const Recipes = () => {
 
   useEffect(() => {
     (async () => {
-      const { data: countData } = await AxiosInstance.get<DocumentCountType>(
-        `/recipe/get-recipe-count?country=${country}&category=${category}&search=${search}`
-      );
+      try {
+        setInitialLoading(true);
+        const { data: countData } = await AxiosInstance.get<DocumentCountType>(
+          `/recipe/get-recipe-count?country=${country}&category=${category}&search=${search}`
+        );
 
-      const { data: dataList } = await AxiosInstance.get<RecipeListType[]>(
-        `/recipe/get-recipes?country=${country}&category=${category}&search=${search}&limit=${20}&page=${0}`
-      );
-      setResultCount(countData.count);
-      setRecipeList(dataList);
+        const { data: dataList } = await AxiosInstance.get<RecipeListType[]>(
+          `/recipe/get-recipes?country=${country}&category=${category}&search=${search}&limit=${20}&page=${0}`
+        );
+        setResultCount(countData.count);
+        setRecipeList(dataList);
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      } catch (error: any) {
+        const message = error.response.data.message || error.message;
+        toast.error(message);
+      } finally {
+        setInitialLoading(false);
+      }
     })();
   }, [country, category, search]);
 
@@ -128,11 +138,15 @@ const Recipes = () => {
           }
         >
           <div className="space-y-8">
-            {recipeList.length
-              ? recipeList.map((recipe: RecipeListType) => (
-                  <RecipeCard {...recipe} />
-                ))
-              : null}
+            {recipeList.length ? (
+              recipeList.map((recipe: RecipeListType) => (
+                <RecipeCard {...recipe} />
+              ))
+            ) : ninitialLoading ? (
+              <div className="flex justify-center items-center">
+                <LuLoader2 className="text-orange-500" size={25} />
+              </div>
+            ) : null}
           </div>
         </InfiniteScroll>
       </div>
